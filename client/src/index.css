@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    /* url("/pexels-muffin-creatives.jpg"); */ /* url("/pexels-irina.jpg"); */
+      /* url("/pexels-elias.jpg"); */ url("/pexels-pixabay.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* dark mode looking scrollbar */
+::-webkit-scrollbar {
+  cursor: pointer;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  cursor: pointer;
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #121212;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #242424;
+}
