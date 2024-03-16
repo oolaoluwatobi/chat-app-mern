@@ -5,7 +5,8 @@
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     /* url("/pexels-muffin-creatives.jpg"); */ /* url("/pexels-irina.jpg"); */
-      /* url("/pexels-elias.jpg"); */ url("/pexels-pixabay.jpg");
+      url("/pexels-elias.jpg");
+  /* url("/pexels-pixabay.jpg"); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

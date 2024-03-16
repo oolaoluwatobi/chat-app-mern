@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
     console.log(user, "user____auth19");
 
     if (user) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(409).json({ message: "username already exists!" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -67,6 +67,7 @@ export const login = async (req, res) => {
     const { username, password } = req.body;
 
     const user = await User.findOne({ username });
+
     const isPasswordCorrect = await bcrypt.compare(
       password,
       user?.password || ""
