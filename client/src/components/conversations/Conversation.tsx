@@ -1,21 +1,53 @@
-const Conversation = () => {
+import useConversation from "../../zustand/useConversation";
+
+interface Conversation {
+  _id: string;
+  fullName: string;
+  username: string;
+  profilePic: string;
+  gender: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface Props {
+  conversation: Conversation;
+  emoji: string;
+  lastIdx: boolean;
+}
+
+const Conversation = ({ conversation, emoji, lastIdx }: Props) => {
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+  const isSelected = selectedConversation?._id === conversation?._id;
+
+  function handleClick() {
+    setSelectedConversation(conversation);
+  }
+
   return (
     <>
-      <div className="flex gap-2 items-center hover:bg-emerald-800/30 rounded-lg p-2 py-1 cursor-pointer">
+      <div
+        onClick={handleClick}
+        className={` ${
+          isSelected ? "bg-emerald-800 " : "hover:bg-emerald-800/60"
+        } flex gap-2 items-center 0 rounded-lg p-2 py-1 cursor-pointer`}
+      >
         <div className="avatar online">
           <div className="w-12 rounded-full">
-            <img src="https://avatar.iran.liara.run/public/girl?usernmae=jola" />
+            <img src={conversation.profilePic} />
           </div>
         </div>
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200 ">Jane Doe</p>
-            <span className="text-xl">✌</span>
+            <p className="font-bold text-gray-200 ">{conversation.fullName}</p>
+            <span className="text-xl">{emoji}</span>
           </div>
         </div>
 
-        <div className="divider my-0 py-0 h-1" />
+        {!lastIdx && <div className="divider my-0 py-0 h-1" />}
       </div>
     </>
   );
