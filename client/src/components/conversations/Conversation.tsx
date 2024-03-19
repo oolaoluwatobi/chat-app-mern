@@ -1,3 +1,4 @@
+import { useSocketContext } from "../../context/useSocketContext";
 import useConversation from "../../zustand/useConversation";
 
 interface Conversation {
@@ -22,6 +23,11 @@ const Conversation = ({ conversation, emoji, lastIdx }: Props) => {
 
   const isSelected = selectedConversation?._id === conversation?._id;
 
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers ? conversation._id in onlineUsers : false;
+
+  console.log(onlineUsers, isOnline, "onlineUsers______");
+
   function handleClick() {
     setSelectedConversation(conversation);
   }
@@ -34,7 +40,7 @@ const Conversation = ({ conversation, emoji, lastIdx }: Props) => {
           isSelected ? "bg-emerald-800 " : "hover:bg-emerald-800/60"
         } flex gap-2 items-center 0 rounded-lg p-2 py-1 cursor-pointer`}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img src={conversation.profilePic} />
           </div>

@@ -17,6 +17,7 @@ export type Message = {
   isRead: boolean;
   createdAt: string;
   updatedAt: string;
+  shouldShake?: boolean;
   __v: number;
 };
 

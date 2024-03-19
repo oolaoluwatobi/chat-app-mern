@@ -16,10 +16,10 @@ const protectRoute = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized - Invalid Token" });
     }
 
-    console.log(verified, "verified___PROTECT_ROUTE");
+    // console.log(verified, "verified___PROTECT_ROUTE");
 
     const user = await User.findById(verified.userId).select("-password");
-    console.log(user, "user___PROTECT_ROUTE");
+    // console.log(user, "user___PROTECT_ROUTE");
 
     req.user = user;
     next();

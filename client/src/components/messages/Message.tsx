@@ -18,6 +18,8 @@ const Message = ({ message }: Props) => {
     ? authUser.profilePic
     : selectedConversation.profilePic;
 
+  const shakeClass = message.shouldShake ? "shake" : "";
+
   return (
     <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
@@ -25,7 +27,9 @@ const Message = ({ message }: Props) => {
           <img src={profilePic} alt="avatar" />
         </div>
       </div>
-      <p className={`chat-bubble text-white ${chatBubbleBgColor} pb-2 `}>
+      <p
+        className={`chat-bubble text-white ${chatBubbleBgColor} ${shakeClass} pb-2 `}
+      >
         {message.message}
       </p>
       <p className={`chat-footer opacity-50 text-xs flex gap-1 items-center `}>

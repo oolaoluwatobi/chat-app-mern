@@ -3,9 +3,11 @@ import useGetMessages from "../../hooks/useGetMessages";
 import { Message as TMessage } from "../../lib/types";
 import Message from "./Message";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
+import useListenMessage from "../../hooks/useListenMessage";
 
 const Messages = () => {
   const { loading, messages } = useGetMessages();
+  useListenMessage();
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
   console.log("messages: ", messages);
