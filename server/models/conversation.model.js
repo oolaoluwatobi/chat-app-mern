@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      default: "",
+    },
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,

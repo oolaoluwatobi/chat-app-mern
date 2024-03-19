@@ -3,14 +3,15 @@ import useSendMessage from "../../hooks/useSendMessage";
 import { FormEvent, useState } from "react";
 
 const MessageInput = () => {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const { loading, sendMessage } = useSendMessage();
 
-  const handleSendMessage = (e: FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("message: ", message);
-    sendMessage(message);
-    setMessage(null);
+    if (!message) return;
+    await sendMessage(message);
+    setMessage("");
   };
 
   return (
@@ -19,13 +20,15 @@ const MessageInput = () => {
         <input
           type="text"
           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 "
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <button
           type="submit"
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
           {loading ? (
-            <span className=" size-5 loading loading-spinner text-yellow-200" />
+            <span className=" size-4 loading loading-spinner " />
           ) : (
             <BsSend className="" />
           )}

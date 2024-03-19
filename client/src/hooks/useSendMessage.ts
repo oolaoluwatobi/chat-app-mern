@@ -11,16 +11,18 @@ const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
 
-  const sendMessage = async (message) => {
-    console.log("message:", message);
-
+  const sendMessage = async (message: string) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `/api/send/${selectedConversation?._id}`,
-        message
+        `/api/messages/send/${selectedConversation?._id}`,
+        {
+          message,
+        }
       );
+      console.log(res.data);
       setMessages([...messages, res.data]);
+      toast.success("Message sent");
     } catch (error) {
       console.error(error);
       toast.error(
