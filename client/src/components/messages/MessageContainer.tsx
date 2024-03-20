@@ -2,8 +2,8 @@
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 
-import Lottie from "lottie-react";
-import animation from "../../assets/animation_8.json";
+// import Lottie from "lottie-react";
+// import animation from "../../assets/animation_8.json";
 import useConversation from "../../zustand/useConversation";
 import { useEffect } from "react";
 import { useAuthContext } from "../../context/AuthContext";
@@ -49,7 +49,7 @@ const NoChatSelected = () => {
         <p>Welcome {authUser.fullName} 👋🏾 </p>
         {/* <p>Welcome 👋 {authUser.fullName} ❄</p> */}
         <p>Select a chat to start messaging</p>
-        <Lottie className="size-32  md:size-40" animationData={animation} />
+        {/* <Lottie className="size-32  md:size-40" animationData={animation} /> */}
         {/* <TiMessages className="text-3xl md:text-6xl text-center" /> */}
       </div>
     </div>
