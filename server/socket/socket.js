@@ -1,3 +1,4 @@
+import { instrument } from "@socket.io/admin-ui";
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
@@ -11,7 +12,9 @@ const io = new Server(server, {
       "http://localhost:3000",
       "http://localhost:4000",
       "https://chat-app-mern-re7b.onrender.com/",
+      "https://admin.socket.io",
     ],
+    credentials: true,
     methods: ["GET", "POST"],
   },
 });
@@ -84,6 +87,18 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("join-room", (roomName) => {
+    console.log("join-room", roomName);
+    socket.join(roomName);
+    const clientsInRoom = io.sockets.adapter.rooms.get(roomName);
+    console.log("join-room", Array.from(clientsInRoom));
+    return Array.from(clientsInRoom);
+    const room = userId?.room;
+    if (room) {
+      socket.broadcast.to(room).emit("activity", roomName);
+    }
+  });
+
   // socket.on() is used to listen to events, can be custom events or built-in events, and can be client and server side
   socket.on("disconnect", () => {
     console.log(userId, `${socket.handshake.query.userId}`);
@@ -106,3 +121,5 @@ io.on("connection", (socket) => {
 // }
 
 export { app as default, io, server };
+
+instrument(io, { auth: false });

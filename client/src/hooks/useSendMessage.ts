@@ -3,21 +3,23 @@ import useConversation from "../zustand/useConversation";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-// interface Props {
-//   message: string
-// }
+interface Props {
+  message: string;
+  room: string;
+}
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
 
-  const sendMessage = async (message: string) => {
+  const sendMessage = async ({ message, room }: Props) => {
     setLoading(true);
     try {
       const res = await axios.post(
         `/api/messages/send/${selectedConversation?._id}`,
         {
           message,
+          room,
         }
       );
       console.log(res.data);
