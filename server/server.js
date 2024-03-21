@@ -12,7 +12,7 @@ import app, { server } from "./socket/socket.js";
 
 const PORT = process.env.PORT || 4000;
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 dotenv.config();
 
@@ -26,11 +26,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
-// app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 server.listen(PORT, () => {
   connectToMongoDB();
