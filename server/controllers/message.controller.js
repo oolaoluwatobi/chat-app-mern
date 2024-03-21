@@ -4,21 +4,36 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, room } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
-    let conversation = await Conversation.findOne({
-      participants: { $all: [senderId, receiverId] },
-    });
-
-    console.log(conversation, "conversation___messagecontroller");
-
-    if (!conversation) {
-      conversation = await Conversation.create({
-        participants: [senderId, receiverId],
+    let conversation;
+    if (room) {
+      conversation = await Conversation.findOne({
+        name: room,
       });
+
+      if (!conversation) {
+        conversation = await Conversation.create({
+          name: room,
+          createdBy: senderId,
+          participants: [senderId],
+        });
+      }
+    } else {
+      conversation = await Conversation.findOne({
+        participants: { $all: [senderId, receiverId] },
+      });
+
+      if (!conversation) {
+        conversation = await Conversation.create({
+          participants: [senderId, receiverId],
+        });
+      }
     }
+
+    // console.log(conversation, "conversation___messagecontroller");
 
     const newMessage = new Message({
       senderId,
@@ -33,6 +48,14 @@ export const sendMessage = async (req, res) => {
     await Promise.all([conversation.save(), newMessage.save()]);
 
     // socket io functionality
+
+    if (room) {
+      io.to(room).emit("newMessage", newMessage);
+      io.emit("join-room", room);
+      // io.emit("join-room", room);
+      // return res.status(201).json(newMessage);
+    }
+
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
       // io.to(<socketId>).emit() sends event to specific client

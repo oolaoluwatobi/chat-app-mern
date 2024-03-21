@@ -8,6 +8,7 @@ import useConversation from "../../zustand/useConversation";
 import { useEffect } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { TiMessages } from "react-icons/ti";
+import { IoChevronBack } from "react-icons/io5";
 
 const MessageContainer = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -24,9 +25,14 @@ const MessageContainer = () => {
       ) : (
         <>
           {/* header */}
-          <div className="bg-slate-500 px-4 py-2 mb-2">
-            <span className="label-text ">To: </span>
-            <span className="text-gray-900 font-bold">
+          <div className="bg-slate-500 px-4 py-2 mb-2 flex space-x-4">
+            <button
+              onClick={() => setSelectedConversation(null)}
+              className="md:hidden"
+            >
+              <IoChevronBack size={20} className="my-auto text-white" />
+            </button>
+            <span className="text-gray-900 text-center font-bold my-auto mx-auto w-full">
               {selectedConversation.fullName}
             </span>
           </div>
